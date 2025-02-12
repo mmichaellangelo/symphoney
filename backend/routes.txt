@@ -1,0 +1,4 @@
+Room Websocket:
+    ws/room/[id]/
+Room CRUD:
+    /room/[id]/
