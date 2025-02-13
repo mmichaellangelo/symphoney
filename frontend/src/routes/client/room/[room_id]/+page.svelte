@@ -21,12 +21,12 @@
             connected = false
         })
         ws.addEventListener("message", (message: any) => {
-            const data: Request = JSON.parse(message.data)
-            console.log(data)
-            msg.update((msg) => ({
-                ...msg,
-                requests: [data].concat(msg.requests),
-            }))
+            // const data: Request = JSON.parse(message.data)
+            // console.log(data)
+            // msg.update((msg) => ({
+            //     ...msg,
+            //     requests: [data].concat(msg.requests),
+            // }))
         })
     }
 

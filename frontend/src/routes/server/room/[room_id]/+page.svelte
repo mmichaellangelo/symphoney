@@ -1,16 +1,14 @@
 <script lang="ts">
     import { page } from "$app/state";
-    import { writable } from "svelte/store";
+    import Canvas from "$lib/elements/Canvas/Canvas.svelte";
+    import { onDestroy } from "svelte";
 
     let connected = $state(false);
 
-    let displayData = $state("data")
+    let roomData = $state<Record<string, number>>({})
 
-    type State = {
-        requests: Array<Request>
-    }
-    export const msg = writable<State>({
-        requests: [],
+    $effect(() => {
+        console.log(roomData)
     })
 
     let ws: WebSocket | null = null;
@@ -24,12 +22,17 @@
             connected = false
         })
         ws.addEventListener("message", (message: any) => {
-            const data = JSON.parse(message.data)
-            const dataParsed = JSON.parse(data)
-            console.log(dataParsed.data)
-            displayData = dataParsed.data
+            const data = JSON.parse(JSON.parse(message.data))
+            roomData[data.memberID] = data.data as number
+            roomData = roomData
         })
     }
+
+    onDestroy(() => {
+        if (ws) {
+            ws.close()
+        }
+    })
 </script>
 
 <h2>{page.params.room_id} server</h2>
@@ -40,5 +43,4 @@
 {:else}
 <p>Not connected</p>
 {/if}
-
-<p>{displayData}</p>
+<Canvas {roomData}/>
