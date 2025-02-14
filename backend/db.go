@@ -51,11 +51,13 @@ func (d *DB) GetAllRoomIDs() ([]string, error) {
 	return rooms, nil
 }
 
+// TODO Check ID NOT TAKEN
 func (d *DB) AddMember(roomID string) (memberID string, err error) {
 	memberNumber, err := d.db.SCard(ctx, roomID).Result()
 	if err != nil {
 		return "", fmt.Errorf("error getting cardinality of room: %w", err)
 	}
+
 	memberID = fmt.Sprintf("member%d", memberNumber+1)
 	_, err = d.db.SAdd(ctx, roomID, memberID).Result()
 	if err != nil {
@@ -64,6 +66,11 @@ func (d *DB) AddMember(roomID string) (memberID string, err error) {
 	memberHashKey := fmt.Sprintf("%s:%s", roomID, memberID)
 	_, err = d.db.HSet(ctx, memberHashKey, "x", 0, "y", 0).Result()
 	return memberID, nil
+}
+
+func (d *DB) RemoveMember(roomID string, memberID string) error {
+	err := d.db.SRem(ctx, roomID, memberID).Err()
+	return err
 }
 
 type Message struct {

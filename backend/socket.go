@@ -57,6 +57,7 @@ func (h *SocketHandler) HandleClient(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error adding member to room: %w", err)
 		c.CloseNow()
 	}
+	defer h.db.RemoveMember(roomID, memberID)
 
 	for {
 		_, rdr, err := c.Reader(context.Background())

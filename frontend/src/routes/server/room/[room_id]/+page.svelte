@@ -5,11 +5,7 @@
 
     let connected = $state(false);
 
-    let roomData = $state<Record<string, number>>({})
-
-    $effect(() => {
-        console.log(roomData)
-    })
+    let roomData = $state<Record<string, {x: number, y: number}>>({})
 
     let ws: WebSocket | null = null;
 
@@ -23,7 +19,8 @@
         })
         ws.addEventListener("message", (message: any) => {
             const data = JSON.parse(JSON.parse(message.data))
-            roomData[data.memberID] = data.data as number
+            const pos = JSON.parse(data.data)
+            roomData[data.memberID] = {x: pos.x as number, y: pos.y as number}
             roomData = roomData
         })
     }
@@ -43,4 +40,4 @@
 {:else}
 <p>Not connected</p>
 {/if}
-<Canvas {roomData}/>
+<Canvas roomData={roomData} mode="server" mouse={null}/>

@@ -1,7 +1,11 @@
 <script lang="ts">
     import { writable } from "svelte/store";
     import { page } from "$app/state";
+    import Canvas from "$lib/elements/Canvas/Canvas.svelte";
+
     let connected = $state(false);
+    let roomData = $state<Record<string, {x: number, y: number}>>({})
+    let mouse = $state<{x: number, y: number}>({x: 0, y: 0})
 
     type State = {
         requests: Array<Request>
@@ -30,23 +34,25 @@
         })
     }
 
-    function handleInput(e: Event) {
-        const slider = e.target as HTMLInputElement;
-        console.log(slider.value)
+    // This isn't running!
+
+    $effect(() => {
+        const data = mouse
         if (ws) {
-            ws.send(slider.value)
+            const mouseData = JSON.stringify(data)
+            ws.send(mouseData)
         }
-    }
+    })
 </script>
 
 <h2>{page.params.room_id} client</h2>
 
 <button onclick={initConn}>Init conn</button>
 
-<input type="range" min="1" max="100" value="50" class="slider" oninput={handleInput}>
-
 {#if connected}
 <p>Connected</p>
 {:else}
 <p>Not connected</p>
 {/if}
+
+<Canvas roomData={roomData} mode="client" bind:mouse={mouse}/>
