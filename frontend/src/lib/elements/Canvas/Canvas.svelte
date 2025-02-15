@@ -41,6 +41,8 @@
 
             this.x += this.xvel
             this.y += this.yvel
+
+            this.radius = 30 - (1.5 * Math.sqrt(Math.pow(this.xvel, 2) + Math.pow(this.yvel, 2)))
         }
     }
 
@@ -81,7 +83,7 @@
         ctx.fillStyle = color
         ctx.globalCompositeOperation = "color-burn"
         ctx.beginPath()
-        ctx.ellipse(xPos,yPos,30,30,0,2*Math.PI,0)
+        ctx.ellipse(xPos,yPos,radius,radius,0,2*Math.PI,0)
         ctx.fill()
         ctx.closePath()
     }

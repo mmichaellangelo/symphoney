@@ -17,6 +17,9 @@
     let ws: WebSocket | null = null;
 
     function initConn() {
+        if (ws) {
+            return
+        }
         ws = new WebSocket(`ws://localhost:8080/ws/room/${page.params.room_id}/client/`)
         ws.addEventListener("open", () => {
             connected = true

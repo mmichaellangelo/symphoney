@@ -89,7 +89,8 @@ func (h *SocketHandler) HandleServer(w http.ResponseWriter, r *http.Request) {
 	}
 	defer c.CloseNow()
 	log.Println("Server Websocket Connection Initialized With " + r.Host)
-	pubsub := h.db.SubscribeToChannel(roomID)
+	pubsub := h.db.db.Subscribe(ctx, roomID)
+	defer pubsub.Unsubscribe(ctx, roomID)
 	defer pubsub.Close()
 	ch := pubsub.Channel()
 	for msg := range ch {

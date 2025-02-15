@@ -51,26 +51,44 @@ func (d *DB) GetAllRoomIDs() ([]string, error) {
 	return rooms, nil
 }
 
-// TODO Check ID NOT TAKEN
 func (d *DB) AddMember(roomID string) (memberID string, err error) {
-	memberNumber, err := d.db.SCard(ctx, roomID).Result()
-	if err != nil {
-		return "", fmt.Errorf("error getting cardinality of room: %w", err)
+	memberID = ""
+	i := 1
+	for {
+		memberID = fmt.Sprintf("member%d", i)
+
+		exists, err := d.db.SIsMember(ctx, roomID, memberID).Result()
+		if err != nil {
+			return "", fmt.Errorf("error checking if is member: %w", err)
+		}
+		if !exists {
+			break
+		}
+		i++
 	}
 
-	memberID = fmt.Sprintf("member%d", memberNumber+1)
 	_, err = d.db.SAdd(ctx, roomID, memberID).Result()
 	if err != nil {
 		return "", fmt.Errorf("error adding member to room: %w", err)
 	}
-	memberHashKey := fmt.Sprintf("%s:%s", roomID, memberID)
-	_, err = d.db.HSet(ctx, memberHashKey, "x", 0, "y", 0).Result()
+
+	// memberHashKey := GetMemberHashKey(memberID, roomID)
+	// _, err = d.db.HSet(ctx, memberHashKey, "x", 0, "y", 0).Result()
 	return memberID, nil
 }
 
 func (d *DB) RemoveMember(roomID string, memberID string) error {
+	fmt.Printf("Removing member %s from room %s\n", memberID, roomID)
+	// memberHashkey := GetMemberHashKey(memberID, roomID)
+	// err := d.db.HDel(ctx, memberHashkey).Err()
+	// if err != nil {
+	// 	return fmt.Errorf("error deleting member hash: %w", err)
+	// }
 	err := d.db.SRem(ctx, roomID, memberID).Err()
-	return err
+	if err != nil {
+		return fmt.Errorf("error removing member from set: %w", err)
+	}
+	return nil
 }
 
 type Message struct {
@@ -80,8 +98,8 @@ type Message struct {
 }
 
 func (d *DB) PublishData(roomID string, memberID string, data string) error {
-	hashKey := GetMemberHashKey(memberID, roomID)
-	err := d.db.HSet(ctx, hashKey, "data", data).Err()
+	// hashKey := GetMemberHashKey(memberID, roomID)
+	// err := d.db.HSet(ctx, hashKey, "data", data).Err()
 	msg := Message{
 		RoomID:   roomID,
 		MemberID: memberID,
