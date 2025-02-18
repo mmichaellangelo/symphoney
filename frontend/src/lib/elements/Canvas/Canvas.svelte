@@ -1,10 +1,11 @@
 <script lang="ts">
     import { onDestroy, onMount } from "svelte";
 
-    let { roomData, mode, mouse = $bindable() }: { roomData: Record<string, {x: number, y: number}>, 
-                                     mode: "client" | "server",
-                                     mouse: {x: number, y: number} | null
-                                   } = $props()
+    let { roomData, mode, mouse = $bindable() }: { 
+                                    roomData: Record<string, {x: number, y: number}>, 
+                                    mode: "client" | "server",
+                                    mouse: {x: number, y: number} | null
+                                } = $props()
 
     class Ball {
         memberID: string
@@ -152,6 +153,25 @@
     onDestroy(() => {
         canvas?.removeEventListener("mousemove", handleMouseMove)
     })
+
+
+    /*
+    *   MIDI STUFF
+    */
+
+    let midi: MIDIAccess | null = null;
+
+    onMount(() => {
+        navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure)
+    })
+
+    function onMIDISuccess(midiAccess: MIDIAccess) {
+        midi = midiAccess
+    }
+    
+    function onMIDIFailure(msg: any) {
+        console.error(`Failed to get MIDI access: ${msg}`)
+    }
 
 </script>
 

@@ -1,0 +1,14 @@
+INSTRUMENTS:
+    1. Ambient pad
+    2. Plucked arpeggio
+    3. Piano chords
+    4. Percussion
+    5. Synth lead
+
+ROLES:
+    - Ambient pad
+        1. Filter [cutoff, resonance]
+        
+    - Plucked arpeggio
+        1. Filter [cutoff, resonance]
+        2. Envelope [attack, decay]
