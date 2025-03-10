@@ -19,9 +19,9 @@ const config = {
 			// strict: true
 		}),
 		// Disable prerendering globally!
-		prerender: {
-			entries: [],
-		}
+		// prerender: {
+		// 	entries: [],
+		// }
 	}
 };
 
