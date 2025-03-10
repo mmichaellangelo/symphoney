@@ -11,6 +11,14 @@ type RoomHandler struct {
 	db *DB
 }
 
+type Room struct {
+	RoomID string `json:"roomid"`
+}
+
+type RoomList struct {
+	Rooms []Room `json:"rooms"`
+}
+
 var (
 	RoomRE       = regexp.MustCompile(`^\/room\/?$`)
 	RoomREWithID = regexp.MustCompile(`^\/room\/(\d+)\/?$`)
@@ -41,6 +49,16 @@ func (h *RoomHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// Get All Rooms
 	case r.Method == http.MethodGet && RoomRE.MatchString(url):
+		rooms, err := h.db.GetAllRoomIDs()
+		if err != nil {
+			http.Error(w, fmt.Sprintf("error getting rooms: %v", err), http.StatusInternalServerError)
+			return
+		}
+		data := &RoomList{
+			Rooms:,
+		}
+		data, err := json.Marshal(rooms)
+		break
 
 	}
 }

@@ -20,6 +20,32 @@ var (
 	WSRoomServerRE = regexp.MustCompile(`^\/ws\/room\/([a-zA-Z0-9_]+)\/server\/?$`)
 )
 
+type BaseMsg struct {
+	Type string `json:"type"`
+}
+
+type MemberAddedMsg struct {
+	Type     BaseMsg
+	MemberID string
+	RoomID   string
+}
+
+type MemberUpdatedMsg struct {
+	Type     BaseMsg
+	MemberID string
+	RoomID   string
+	Data     map[string]interface{}
+}
+
+type Member struct {
+	ID string `json:"id"`
+}
+
+type Room struct {
+	ID      string
+	Members []Member
+}
+
 func NewSocketHandler(db *DB) *SocketHandler {
 	return &SocketHandler{db: db}
 }

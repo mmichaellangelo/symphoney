@@ -1,14 +1,24 @@
 INSTRUMENTS:
     1. Ambient pad
     2. Plucked arpeggio
-    3. Piano chords
+    3. Sustained chords
     4. Percussion
     5. Synth lead
 
 ROLES:
+    - CONDUCTOR
+        1. Base chords for whole song [major/minor, chord]
     - Ambient pad
-        1. Filter [cutoff, resonance]
-        
+        1. Filter [cutoff, resonance] 
+        2. Chords [type (#notes/extended)]
     - Plucked arpeggio
         1. Filter [cutoff, resonance]
         2. Envelope [attack, decay]
+    - Piano chords
+        1. [velocity, sustain]
+
+ORDER OF IMPORTANCE:
+    1. CONDUCTOR
+    2. Ambient pad > Filter
+    3. Plucked arpeggio > Filter
+    4. 
