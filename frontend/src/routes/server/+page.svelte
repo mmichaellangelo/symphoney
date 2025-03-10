@@ -7,11 +7,11 @@
     async function handleSubmit(e: SubmitEvent) {
         e.preventDefault();
 
-        const res = await fetch(`${PUBLIC_SERVER_ADDRESS}/room/`,
-            {
-                method: "POST",
-            }
-        )
+        // const res = await fetch(`${PUBLIC_SERVER_ADDRESS}/room/`,
+        //     {
+        //         method: "POST",
+        //     }
+        // )
     }
 
 </script>
