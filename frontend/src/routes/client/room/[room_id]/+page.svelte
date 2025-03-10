@@ -2,10 +2,13 @@
     import { writable } from "svelte/store";
     import { page } from "$app/state";
     import Canvas from "$lib/elements/Canvas/Canvas.svelte";
+    import type { PageProps } from "./$types";
 
     let connected = $state(false);
     let roomData = $state<Record<string, {x: number, y: number}>>({})
     let mouse = $state<{x: number, y: number}>({x: 0, y: 0})
+
+    let { data }: PageProps = $props();
 
     type State = {
         requests: Array<Request>
@@ -48,7 +51,7 @@
     })
 </script>
 
-<h2>{page.params.room_id} client</h2>
+<h2>{data.roomID} client</h2>
 
 <button onclick={initConn}>Init conn</button>
 

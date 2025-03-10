@@ -1,1 +1,0 @@
-import"../chunks/Bg9kRutz.js";import"../chunks/69_IOA4Y.js";import{n as a}from"../chunks/B4Lg9lPa.js";import{t,a as o}from"../chunks/DZygbGll.js";var n=t('<a href="/client">Client</a> <a href="/server">Server</a>',1);function s(r){var e=n();a(2),o(r,e)}export{s as component};
