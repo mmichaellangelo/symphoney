@@ -1,0 +1,1 @@
+export const env={"PUBLIC_SERVER_ADDRESS":"localhost:8080"}
