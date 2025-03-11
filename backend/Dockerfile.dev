@@ -1,0 +1,20 @@
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY . .
+
+RUN apk add --update --no-cache \
+    go \
+    git \
+    musl-dev
+
+ENV GOPATH=/go
+ENV PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
+
+RUN go install github.com/air-verse/air@latest
+
+# Ensure the air binary is in the PATH
+ENV PATH=$GOPATH/bin:$PATH
+
+CMD ["air", "-c", ".air.toml"]

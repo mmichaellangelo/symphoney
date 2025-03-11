@@ -1,0 +1,25 @@
+services:
+  web:
+    container_name: web
+    build:
+      context: frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./frontend:/app
+    ports: 
+      - 5173:5173
+  api:
+    container_name: api
+    build:
+      context: backend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend:/app
+    ports: 
+      - 8080:8080
+  redis:
+    container_name: redis
+    image: redis:alpine
+    expose: 
+      - 6379
+ 

@@ -10,7 +10,7 @@ import (
 func main() {
 
 	rdb := CreateDBConnection(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     "redis:6379",
 		Password: "",
 		DB:       0,
 	})
@@ -22,6 +22,6 @@ func main() {
 	mux.Handle("/ws/", sockethandler)
 	mux.Handle("/room/", roomhandler)
 
-	err := http.ListenAndServe("localhost:8080", mux)
+	err := http.ListenAndServe(":8080", mux)
 	log.Fatal(err)
 }

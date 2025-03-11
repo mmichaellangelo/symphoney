@@ -1,8 +1,0 @@
-CREATE ROOM
-    Go to website
-    Submit form
-    Server creates room,
-    gives a code for the room
-GIVE OUT CODE
-    people join
-    start collecting data
