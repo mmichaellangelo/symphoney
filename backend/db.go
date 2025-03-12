@@ -147,16 +147,16 @@ func (d *DB) GetRoomMemberIDs(roomID string) ([]string, error) {
 	return members, nil
 }
 
-func (d *DB) GetRoomMemberDataAll(roomID string) (map[string]interface{}, error) {
-	exists, err := d.RoomExists(roomID)
-	if err != nil {
-		return nil, err
-	}
-	if !exists {
-		return nil, fmt.Errorf("error: room does not exist")
-	}
+// func (d *DB) GetRoomMemberDataAll(roomID string) (map[string]interface{}, error) {
+// 	exists, err := d.RoomExists(roomID)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	if !exists {
+// 		return nil, fmt.Errorf("error: room does not exist")
+// 	}
 
-}
+// }
 
 func (d *DB) RemoveMember(roomID string, memberID string) error {
 	fmt.Printf("Removing member %s from room %s\n", memberID, roomID)
