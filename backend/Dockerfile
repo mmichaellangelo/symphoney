@@ -17,4 +17,4 @@ RUN go build -o app
 EXPOSE 8080
 
 # Run the server
-# CMD ["./app"]
+CMD ["./app"]
