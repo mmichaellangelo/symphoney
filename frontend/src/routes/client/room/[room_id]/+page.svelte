@@ -23,7 +23,7 @@
         if (ws) {
             return
         }
-        ws = new WebSocket(`ws://localhost:8080/ws/room/${page.params.room_id}/client/`)
+        ws = new WebSocket(`ws://api:8080/ws/room/${page.params.room_id}/client/`)
         ws.addEventListener("open", () => {
             connected = true
         })
