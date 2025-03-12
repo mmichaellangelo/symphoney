@@ -7,8 +7,8 @@ services:
   api:
     container_name: api
     image: ghcr.io/mmichaellangelo/phone_sensordata/api:latest
-    ports: 
-      - 8080:8080
+    expose: 
+      - 8080
   redis:
     container_name: redis
     image: redis:alpine
@@ -18,9 +18,7 @@ services:
     image: containrrr/watchtower:latest
     container_name: watchtower
     environment:
-      WATCHTOWER_POLL_INTERVAL: 300  # Check for updates every 5 minutes
-      WATCHTOWER_REPO_USER: ${{ github.actor }}
-      WATCHTOWER_REPO_PASS: ${{ secrets.GITHUB_TOKEN }}
+      WATCHTOWER_POLL_INTERVAL: 60  # Check for updates every minute
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: always
