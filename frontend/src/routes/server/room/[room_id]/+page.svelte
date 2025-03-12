@@ -13,7 +13,7 @@
         if (ws) {
             return
         }
-        ws = new WebSocket(`ws://api:8080/ws/room/${page.params.room_id}/server/`)
+        ws = new WebSocket(`ws://symphoney.xyz:8080/ws/room/${page.params.room_id}/server/`)
         ws.addEventListener("open", () => {
             connected = true
         })
