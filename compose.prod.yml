@@ -1,16 +1,12 @@
 services:
   web:
     container_name: web
-    build:
-      context: frontend
-      dockerfile: Dockerfile.prod
+    image: ghcr.io/mmichaellangelo/phone_sensordata/web:latest
     ports: 
       - 80:80
   api:
     container_name: api
-    build: 
-      context: backend
-      dockerfile: Dockerfile.prod
+    image: ghcr.io/mmichaellangelo/phone_sensordata/api:latest
     ports: 
       - 8080:8080
   redis:
@@ -18,3 +14,13 @@ services:
     image: redis:alpine
     expose: 
       - 6379
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    environment:
+      WATCHTOWER_POLL_INTERVAL: 300  # Check for updates every 5 minutes
+      WATCHTOWER_REPO_USER: ${{ github.actor }}
+      WATCHTOWER_REPO_PASS: ${{ secrets.GITHUB_TOKEN }}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
