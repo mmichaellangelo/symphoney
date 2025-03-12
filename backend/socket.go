@@ -69,7 +69,7 @@ func (h *SocketHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (h *SocketHandler) HandleClient(w http.ResponseWriter, r *http.Request) {
 	roomID := WSRoomClientRE.FindStringSubmatch(r.URL.Path)[1]
 	c, err := websocket.Accept(w, r, &websocket.AcceptOptions{
-		OriginPatterns: []string{"localhost:5173"},
+		OriginPatterns: []string{"symphoney.xyz"},
 	})
 	if err != nil {
 		log.Println(err)
@@ -107,7 +107,7 @@ func (h *SocketHandler) HandleClient(w http.ResponseWriter, r *http.Request) {
 func (h *SocketHandler) HandleServer(w http.ResponseWriter, r *http.Request) {
 	roomID := WSRoomServerRE.FindStringSubmatch(r.URL.Path)[1]
 	c, err := websocket.Accept(w, r, &websocket.AcceptOptions{
-		OriginPatterns: []string{"localhost:5173"},
+		OriginPatterns: []string{"symphoney.xyz"},
 	})
 	if err != nil {
 		log.Println(err)
@@ -128,7 +128,7 @@ func (h *SocketHandler) HandleServer(w http.ResponseWriter, r *http.Request) {
 
 func testingCodeDoNotRun(w http.ResponseWriter, r *http.Request) {
 	c, err := websocket.Accept(w, r, &websocket.AcceptOptions{
-		OriginPatterns: []string{"localhost:5173"},
+		OriginPatterns: []string{"symphoney.xyz"},
 	})
 	if err != nil {
 		log.Println(err)
