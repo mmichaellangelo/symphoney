@@ -23,6 +23,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: frontend
+          dockerfile: frontend/Dockerfile.prod
           push: true
           tags: |
             ghcr.io/mmichaellangelo/phone_sensordata/web:latest
@@ -32,6 +33,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: backend
+          dockerfile: backend/Dockerfile.prod
           push: true
           tags: |
             ghcr.io/mmichaellangelo/phone_sensordata/api:latest
