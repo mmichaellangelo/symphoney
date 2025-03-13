@@ -1,13 +1,7 @@
-FROM alpine:3.21
+FROM node:23-alpine as build
 
 # Set working directory
 WORKDIR /app
-
-# Install dependencies
-RUN apk add --no-cache \
-    nodejs \
-    npm \
-    nginx
 
 # Copy node package files
 COPY package*.json ./
@@ -21,9 +15,11 @@ COPY . .
 # Build static site
 RUN npm run build
 
-# Set permissions for build directory
-RUN chown -R nginx:nginx /app/build
-RUN chmod -R 755 /app/build
+# Use nginx alpine image as final stage
+FROM nginx:1.27.4-alpine
+
+# Copy built webapp to nginx image
+COPY --from=build /app/build /usr/share/nginx/html
 
 # Copy nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
