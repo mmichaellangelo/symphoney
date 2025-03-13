@@ -19,7 +19,7 @@ RUN npm run build
 FROM nginx:1.27.4-alpine
 
 # Copy built webapp to nginx image
-COPY --from=build /app/build ./
+COPY --from=build /app/build /app
 
 # Copy nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
