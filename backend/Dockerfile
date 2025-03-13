@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies
-RUN apk add --update --no-cache \
+RUN apk add \
     go
 
 # Build application

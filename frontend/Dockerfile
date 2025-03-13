@@ -4,7 +4,7 @@ FROM alpine:latest
 WORKDIR /app
 
 # Install dependencies
-RUN apk add --update --no-cache \
+RUN apk add \
     nodejs \
     npm \
     nginx
