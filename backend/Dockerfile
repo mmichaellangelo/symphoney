@@ -1,14 +1,17 @@
-FROM alpine:latest
+FROM alpine:3.21
 
 # Set working directory
 WORKDIR /app
 
-# Copy all src files
-COPY . .
-
 # Install dependencies
-RUN apk add \
-    go
+RUN apk add --no-cache go
+
+# Copy necessary files and download modules
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy rest of source code
+COPY . .
 
 # Build application
 RUN go build -o app
