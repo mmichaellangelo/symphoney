@@ -2,8 +2,15 @@ services:
   web:
     container_name: web
     image: ghcr.io/mmichaellangelo/phone_sensordata/web:latest
+    build:
+      args:
+        - API_ADDRESS: symphoney.xyz
+    volumes: 
+      - /etc/letsencrypt:/etc/letsencrypt
     ports: 
       - 80:80
+      - 443:443
+
   api:
     container_name: api
     image: ghcr.io/mmichaellangelo/phone_sensordata/api:latest

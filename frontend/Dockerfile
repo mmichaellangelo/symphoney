@@ -1,3 +1,4 @@
+# BUILD STAGE
 FROM node:23-alpine as build
 
 # Set working directory
@@ -11,6 +12,12 @@ RUN npm install
 
 # Copy rest of source files
 COPY . .
+
+# Get API address from build args
+ARG API_ADDRESS=symphoney.xyz
+
+# Set environment var
+ENV API_ADDRESS=${API_ADDRESS}
 
 # Build static site
 RUN npm run build

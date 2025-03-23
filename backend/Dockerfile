@@ -17,6 +17,9 @@ RUN go build -o app
 FROM gcr.io/distroless/static
 COPY --from=build /app /
 
+# Set environment variables
+ENV API_PORT 8080
+
 # Expose port
 EXPOSE 8080
 

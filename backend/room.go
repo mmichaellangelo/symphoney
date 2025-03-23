@@ -28,6 +28,10 @@ func NewRoomHandler(db *DB) *RoomHandler {
 	return &RoomHandler{db: db}
 }
 
+/*
+ *	ROUTES
+ */
+
 func (h *RoomHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	url := r.URL.Path
@@ -47,22 +51,22 @@ func (h *RoomHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		break
 
-	// Get All Rooms
-	case r.Method == http.MethodGet && RoomRE.MatchString(url):
-		// rooms, err := h.db.GetAllRoomIDs()
-		// if err != nil {
-		// 	http.Error(w, fmt.Sprintf("error getting rooms: %v", err), http.StatusInternalServerError)
-		// 	return
-		// }
-		// data := &RoomList{
-		// 	Rooms:,
-		// }
-		// data, err := json.Marshal(rooms)
-		break
+		// Get All Rooms
+		// case r.Method == http.MethodGet && RoomRE.MatchString(url):
+		// 	rooms, err := h.db.GetAllRoomIDs()
+		// 	if err != nil {
+		// 		http.Error(w, fmt.Sprintf("error getting rooms: %v", err), http.StatusInternalServerError)
+		// 		return
+		// 	}
+		// 	data := &RoomList{
+		// 		Rooms:,
+		// 	}
+		// 	data, err := json.Marshal(rooms)
+		// 	break
 
 	}
 }
 
-func (h *RoomHandler) CreateRoom() {
+// func (h *RoomHandler) CreateRoom() {
 
-}
+// }

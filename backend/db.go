@@ -172,19 +172,13 @@ func (d *DB) RemoveMember(roomID string, memberID string) error {
 	return nil
 }
 
-type Message struct {
-	RoomID   string `json:"roomID"`
-	MemberID string `json:"memberID"`
-	Data     string `json:"data"`
-}
-
 func (d *DB) PublishData(roomID string, memberID string, data string) error {
 	// hashKey := GetMemberHashKey(memberID, roomID)
 	// err := d.db.HSet(ctx, hashKey, "data", data).Err()
 	msg := Message{
-		RoomID:   roomID,
-		MemberID: memberID,
-		Data:     data,
+		RoomID:   &roomID,
+		MemberID: &memberID,
+		Data:     &data,
 	}
 	msgJson, err := json.Marshal(msg)
 	if err != nil {

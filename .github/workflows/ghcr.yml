@@ -27,6 +27,8 @@ jobs:
         with:
           context: frontend
           push: true
+          build-args: |
+            API_ADDRESS=symphoney.xyz
           tags: |
             ghcr.io/mmichaellangelo/phone_sensordata/web:latest
             ghcr.io/mmichaellangelo/phone_sensordata/web:${{ github.sha }}
