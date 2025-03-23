@@ -4,7 +4,7 @@ services:
     image: ghcr.io/mmichaellangelo/phone_sensordata/web:latest
     build:
       args:
-        - API_ADDRESS: symphoney.xyz
+        - API_ADDRESS=symphoney.xyz
     volumes: 
       - /etc/letsencrypt:/etc/letsencrypt
     ports: 
