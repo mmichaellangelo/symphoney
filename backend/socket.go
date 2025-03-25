@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -35,15 +36,6 @@ type MemberUpdatedMsg struct {
 	MemberID string
 	RoomID   string
 	Data     map[string]interface{}
-}
-
-type Member struct {
-	ID string `json:"id"`
-}
-
-type Room struct {
-	ID      string
-	Members []Member
 }
 
 func NewSocketHandler(db *DB) *SocketHandler {
@@ -98,7 +90,7 @@ func (h *SocketHandler) HandleClient(w http.ResponseWriter, r *http.Request) {
 			log.Println("Error reading message:", err)
 			break
 		}
-		data := string(msg[:n])
+		data := json.RawMessage(msg[:n])
 		log.Printf("%s\n", data)
 		h.db.PublishData(roomID, memberID, data)
 	}

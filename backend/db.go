@@ -172,7 +172,7 @@ func (d *DB) RemoveMember(roomID string, memberID string) error {
 	return nil
 }
 
-func (d *DB) PublishData(roomID string, memberID string, data string) error {
+func (d *DB) PublishData(roomID string, memberID string, data json.RawMessage) error {
 	// hashKey := GetMemberHashKey(memberID, roomID)
 	// err := d.db.HSet(ctx, hashKey, "data", data).Err()
 	msg := Message{

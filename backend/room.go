@@ -11,10 +11,6 @@ type RoomHandler struct {
 	db *DB
 }
 
-type Roooom struct {
-	RoomID string `json:"roomid"`
-}
-
 type RoomList struct {
 	Rooms []Room `json:"rooms"`
 }
@@ -50,19 +46,6 @@ func (h *RoomHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("error sending data: %w", err)
 		}
 		break
-
-		// Get All Rooms
-		// case r.Method == http.MethodGet && RoomRE.MatchString(url):
-		// 	rooms, err := h.db.GetAllRoomIDs()
-		// 	if err != nil {
-		// 		http.Error(w, fmt.Sprintf("error getting rooms: %v", err), http.StatusInternalServerError)
-		// 		return
-		// 	}
-		// 	data := &RoomList{
-		// 		Rooms:,
-		// 	}
-		// 	data, err := json.Marshal(rooms)
-		// 	break
 
 	}
 }
