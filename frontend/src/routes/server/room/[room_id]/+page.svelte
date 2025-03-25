@@ -1,19 +1,23 @@
 <script lang="ts">
-    import { page } from "$app/state";
-    import Canvas from "$lib/elements/Canvas/Canvas.svelte";
-    import { onDestroy } from "svelte";
+    // ENVIRONMENT
+    const API_ADDRESS = import.meta.env.VITE_API_ADDRESS || "wss://symphoney.xyz"
 
-    let connected = $state(false);
+    import { page } from "$app/state"
+    import Canvas from "$lib/elements/Canvas/Canvas.svelte"
+    import { onDestroy } from "svelte"
+
+
+    let connected = $state(false)
 
     let roomData = $state<Record<string, {x: number, y: number}>>({})
 
-    let ws: WebSocket | null = null;
+    let ws: WebSocket | null = null
 
     function initConn() {
         if (ws) {
             return
         }
-        ws = new WebSocket(`wss://symphoney.xyz/ws/room/${page.params.room_id}/server/`)
+        ws = new WebSocket(`${API_ADDRESS}/ws/room/${page.params.room_id}/server/`)
         ws.addEventListener("open", () => {
             connected = true
         })

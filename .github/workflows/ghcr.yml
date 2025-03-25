@@ -6,7 +6,7 @@ on:
       - master  # Trigger on pushes to the master branch
 
 jobs:
-  build-and-push:
+  build-push-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,9 +26,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: frontend
+          target: prod
           push: true
-          build-args: |
-            API_ADDRESS=symphoney.xyz
           tags: |
             ghcr.io/mmichaellangelo/phone_sensordata/web:latest
             ghcr.io/mmichaellangelo/phone_sensordata/web:${{ github.sha }}
@@ -37,7 +36,22 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: backend
+          target: prod
           push: true
           tags: |
             ghcr.io/mmichaellangelo/phone_sensordata/api:latest
             ghcr.io/mmichaellangelo/phone_sensordata/api:${{ github.sha }}
+
+      - name: Update production server
+        uses: appleboy/ssh-action@master
+        with:
+          host: symphoney.xyz
+          username: root
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            apt update && apt upgrade -y
+            cd app/
+            wget -O https://raw.githubusercontent.com/mmichaellangelo/phone_sensordata/refs/heads/master/compose.prod.yml
+            docker compose -f compose.prod.yml pull
+            docker compose -f compose.prod.yml up -d
+

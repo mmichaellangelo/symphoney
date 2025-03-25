@@ -1,27 +1,22 @@
-FROM golang:alpine3.21 as build
-
-# Set working directory
+##################################
+# BASE STAGE
+FROM golang:alpine3.21 as base
 WORKDIR /app
-
-# Copy necessary files and download modules
 COPY go.mod go.sum /
 RUN go mod download
-
-# Copy rest of source code
 COPY . .
-
-# Build application
 RUN go build -o app
 
-# Copy to distroless
-FROM gcr.io/distroless/static
-COPY --from=build /app /
+##################################
+# DEV TARGET
+FROM base as dev
+WORKDIR /app
+RUN go install github.com/air-verse/air@latest
+CMD ["air", "-c", ".air.toml"]
 
-# Set environment variables
-ENV API_PORT 8080
-
-# Expose port
+##################################
+# PROD TARGET
+FROM gcr.io/distroless/static as prod
+COPY --from=base /app/app /app
 EXPOSE 8080
-
-# Run the server
 CMD ["/app"]

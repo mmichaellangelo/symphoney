@@ -2,9 +2,6 @@ services:
   web:
     container_name: web
     image: ghcr.io/mmichaellangelo/phone_sensordata/web:latest
-    build:
-      args:
-        - API_ADDRESS=symphoney.xyz
     volumes: 
       - /etc/letsencrypt:/etc/letsencrypt
     ports: 
@@ -14,18 +11,19 @@ services:
   api:
     container_name: api
     image: ghcr.io/mmichaellangelo/phone_sensordata/api:latest
-    ports: 
-      - 8080:8080
+    expose: 
+      - 8080
   redis:
     container_name: redis
     image: redis:alpine
     expose: 
       - 6379
-  watchtower:
-    image: containrrr/watchtower:latest
-    container_name: watchtower
-    environment:
-      WATCHTOWER_POLL_INTERVAL: 60  # Check for updates every minute
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: always
+      
+  # watchtower:
+  #   image: containrrr/watchtower:latest
+  #   container_name: watchtower
+  #   environment:
+  #     WATCHTOWER_POLL_INTERVAL: 60  # Check for updates every minute
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   restart: always
