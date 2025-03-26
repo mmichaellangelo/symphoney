@@ -46,9 +46,13 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_ed25519
+          # Ensure proper line endings and format
+          sed -i 's/\\n/\n/g' ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan symphoney.xyz >> ~/.ssh/known_hosts
-      
+          # Verify key is properly formatted
+          ssh-keygen -l -f ~/.ssh/id_ed25519
+          
       - name: Test SSH connection
         run: ssh -i ~/.ssh/id_ed25519 root@symphoney.xyz "echo 'SSH working'"
       
