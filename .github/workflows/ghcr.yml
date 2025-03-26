@@ -43,7 +43,7 @@ jobs:
             ghcr.io/mmichaellangelo/phone_sensordata/api:${{ github.sha }}
       
       - name: Test secret
-        run: echo ${{ secrets.SUPER_SECRET }}
+        run: echo "${{ secrets.SUPER_SECRET }}"
 
 
       - name: Setup SSH
