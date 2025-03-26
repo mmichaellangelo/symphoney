@@ -42,27 +42,23 @@ jobs:
             ghcr.io/mmichaellangelo/phone_sensordata/api:latest
             ghcr.io/mmichaellangelo/phone_sensordata/api:${{ github.sha }}
       
-      - name: Test secret
-        run: echo "${{ secrets.SUPER_SECRET }}"
-
-
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_ed25519
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/github
           # Ensure proper line endings and format
-          sed -i 's/\\n/\n/g' ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+          sed -i 's/\\n/\n/g' ~/.ssh/github
+          chmod 600 ~/.ssh/github
           ssh-keyscan symphoney.xyz >> ~/.ssh/known_hosts
           # Verify key is properly formatted
-          ssh-keygen -l -f ~/.ssh/id_ed25519
+          ssh-keygen -l -f ~/.ssh/github
 
       - name: Test SSH connection
-        run: ssh -i ~/.ssh/id_ed25519 root@symphoney.xyz "echo 'SSH working'"
+        run: ssh -i ~/.ssh/github root@symphoney.xyz "echo 'SSH working'"
       
       - name: Update server
         run: |
-          ssh -i ~/.ssh/id_ed25519 root@symphoney.xyz "
+          ssh -i ~/.ssh/github root@symphoney.xyz "
             cd /app
             curl -sO https://raw.githubusercontent.com/mmichaellangelo/phone_sensordata/refs/heads/master/compose.prod.yml
             docker compose -f compose.prod.yml up -d --force-recreate
