@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-push-deploy:
-    runs-on: ubuntu-latest
+    runs-on: debian-latest
     permissions:
       contents: read
       packages: write
@@ -49,10 +49,13 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan symphoney.xyz >> ~/.ssh/known_hosts
       
+      - name: Test SSH connection
+        run: ssh -i ~/.ssh/id_ed25519 root@symphoney.xyz "echo 'SSH working'"
+      
       - name: Update server
         run: |
           ssh -i ~/.ssh/id_ed25519 root@symphoney.xyz "
             cd /app
-            curl -sO https://raw.githubusercontent.com/.../compose.prod.yml
+            curl -sO https://raw.githubusercontent.com/mmichaellangelo/phone_sensordata/refs/heads/master/compose.prod.yml
             docker compose -f compose.prod.yml up -d --force-recreate
           "
