@@ -59,7 +59,7 @@ jobs:
       - name: Update server
         run: |
           ssh -i ~/.ssh/github root@symphoney.xyz "
-            cd /app
+            cd ~/app/
             curl -sO https://raw.githubusercontent.com/mmichaellangelo/phone_sensordata/refs/heads/master/compose.prod.yml
             docker compose -f compose.prod.yml up -d --force-recreate
           "
