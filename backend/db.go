@@ -86,13 +86,13 @@ func (d *DB) GetAllRoomIDs() ([]string, error) {
 }
 
 func (d *DB) AddMember(roomID string) (memberID string, err error) {
-	roomExists, err := d.RoomExists(roomID)
-	if err != nil {
-		return "", fmt.Errorf("error checking if room exists: %w", err)
-	}
-	if !roomExists {
-		return "", fmt.Errorf("error: room does not exist")
-	}
+	// roomExists, err := d.RoomExists(roomID)
+	// if err != nil {
+	// 	return "", fmt.Errorf("error checking if room exists: %w", err)
+	// }
+	// if !roomExists {
+	// 	return "", fmt.Errorf("error: room does not exist")
+	// }
 	memberID = ""
 	i := 1
 	for {
