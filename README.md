@@ -1,6 +1,6 @@
 ![Symphoney](symphoney_small.png)
 
-> **Officially hosted at [symphoney.xyz](http://symphoney.xyz)**
+**This is a work in progress and is not currently functional**
 
 A program for creating interactive computer music experiences.
 
